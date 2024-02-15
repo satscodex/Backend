@@ -53,21 +53,23 @@ userschema.methods.isPasswordCorect=async function(password){
     return await bcrypt.compare(password,this.password);
 }
 userschema.methods.generateAccesstoken=function (){
+  
     return Jwt.sign({
         _id:this._id,
         email:this.email,
         username:this.username,
         fullname:this.fullname
 
-     },process.env.ACCESS_TROKEN_SECRET,{
-       expiresIn:ACCESS_TOKEN_EXPIRY
+     },process.env.ACCESS_TOKEN_SECRET,{
+       expiresIn:process.env.ACCESS_TOKEN_EXPIRY
      })
 }
 userschema.methods.generateRefreshtoken=function (){
+ 
     return Jwt.sign({
         _id:this._id,
-     },process.env.ACCESS_TROKEN_SECRET,{
-       expiresIn:REFRESH_TOKEN_EXPIRY
+     },process.env.REFRESH_TOKEN_SECRET,{
+       expiresIn:process.env.REFRESH_TOKEN_EXPIRY
      })
 }
 export const User=mongoose.model('User',userschema);
